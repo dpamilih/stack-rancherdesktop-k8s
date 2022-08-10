@@ -1,0 +1,31 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: elasticsearch
+  namespace: elastic-system
+spec:
+  version: 8.3.3
+  nodeSets:
+  - name: default
+    count: 2
+    config:
+      node.store.allow_mmap: false
+    podTemplate:
+      metadata:
+        labels:
+          scrape: es
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana
+  namespace: elastic-system
+spec:
+  version: 8.3.3
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
+  podTemplate:
+    metadata:
+      labels:
+       scrape: kb
