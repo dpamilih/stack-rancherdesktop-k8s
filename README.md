@@ -4,7 +4,7 @@
 
 - Kibana will be available on https://localhost-kb
 - Elasticsearch will be exposed on https://localhost-es
-- Stack monitoring using metricbeat and filebeat will be enabled ***don't forget to configure ILM for these indices, as the default one will make the disk full***
+- Stack monitoring using metricbeat and filebeat will be enabled ***don't forget to configure ILM for these indices, as the default one will will not be limited in disk space usage***
 - The stack will be using ```elastic-system``` namespace
 - Tested on [Rancher Desktop](https://rancherdesktop.io/), but should also work in other K8s environment
 - Using traefik ingress, but should also work with other ingress as well. 
