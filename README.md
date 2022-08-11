@@ -17,6 +17,8 @@
     ```
 3. If using Rancher Desktop the default configuration will not work as it expect a proper TLS certs on the backend while elasticsearch and kibana image will use self-signed cert by default. Run the following to update the traefik configuration to not check valid cert on the backend 
      ```
+     helm repo add traefik https://helm.traefik.io/traefik
+     helm repo update
      helm -n kube-system upgrade traefik traefik/traefik -f traefik-values.yml
      ```
 
@@ -26,6 +28,7 @@
     ```
     helm repo add elastic https://helm.elastic.co
     helm repo update
+    helm install elastic-operator elastic/eck-operator -n elastic-system --create-namespace
     ```
 2. Install elasticsearch
     ```
