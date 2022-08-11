@@ -30,7 +30,7 @@
     helm repo update
     helm install elastic-operator elastic/eck-operator -n elastic-system --create-namespace
     ```
-2. Install elasticsearch
+2. Install elasticsearch & kibana
     ```
     kubectl apply -f elasticsearch.yaml
     ```
