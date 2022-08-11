@@ -42,7 +42,7 @@
     ```
 5. Kibana will be available at ```https://localhost-kb``` the user id is ```elastic``` the password can be retrieved by pass.sh script:
     ```
-    ./pass.sh
+    sh ./pass.sh
     ```
 6. Elasticsearch can be reached at ```https://localhost-es``` please note that it will use port 443 as it is exposed via an ingress. The default auth will be ```elastic``` and password as above.
 6. ***Check the ILM for filebeat & metricbeat indices, make sure it will be deleted after certain period of time***
