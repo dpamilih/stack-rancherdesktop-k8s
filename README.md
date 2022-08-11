@@ -34,7 +34,7 @@
     ```
     kubectl apply -f elasticsearch.yaml
     ```
-3. Install ingress
+3. Install ingress to expose the pods to outside world
     ```
     kubectl apply -f stack-ingress.yaml
     ```
