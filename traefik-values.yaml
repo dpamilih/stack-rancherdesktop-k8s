@@ -1,0 +1,33 @@
+USER-SUPPLIED VALUES:
+global:
+  systemDefaultRegistry: ""
+image:
+  name: rancher/mirrored-library-traefik
+  tag: 2.6.2
+podAnnotations:
+  prometheus.io/port: "8082"
+  prometheus.io/scrape: "true"
+ports:
+  websecure:
+    tls:
+      enabled: true
+priorityClassName: system-cluster-critical
+providers:
+  kubernetesIngress:
+    publishedService:
+      enabled: true
+rbac:
+  enabled: true
+service:
+  ipFamilyPolicy: PreferDualStack
+tolerations:
+- key: CriticalAddonsOnly
+  operator: Exists
+- effect: NoSchedule
+  key: node-role.kubernetes.io/control-plane
+  operator: Exists
+- effect: NoSchedule
+  key: node-role.kubernetes.io/master
+  operator: Exists
+additionalArguments:
+  - --serversTransport.insecureSkipVerify=true 
