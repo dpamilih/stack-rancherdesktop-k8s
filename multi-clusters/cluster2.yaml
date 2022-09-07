@@ -1,0 +1,74 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: es-cluster2
+  namespace: cluster2
+spec:
+  version: 8.3.3
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: es-cluster1
+        namespace: cluster1 
+    logs:
+      elasticsearchRefs:
+      - name: es-cluster1
+        namespace: cluster1 
+  nodeSets:
+  - name: default 
+    count: 2
+    config:
+      node.store.allow_mmap: false
+---
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana-cluster2
+  namespace: cluster2 
+spec:
+  version: 8.3.3
+  elasticsearchRef:
+    name: es-cluster2
+    namespace: cluster2 
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: es-cluster1 
+        namespace: cluster1 
+    logs:
+      elasticsearchRefs:
+      - name: es-cluster1
+        namespace: cluster1 
+  count: 1
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cluster2-ingress
+  namespace: cluster2
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+
+spec:
+  rules:
+    - host: localhost-cluster2-es
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: es-cluster2-es-http
+                port:
+                  name: https
+    - host: localhost-cluster2-kb
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: kibana-cluster2-kb-http
+                port:
+                  name: https
